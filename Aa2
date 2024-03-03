@@ -1,0 +1,68 @@
+import unittest
+
+class Alien:
+    def __init__(self):
+        self.__name = ''
+        self.__home = ''
+        self.__health = 100
+        self.__damage = 0
+
+    def attack(self, alien):
+        alien.receive_damage(self.__damage)
+
+    def receive_damage(self, dmg):
+        self.__health -= dmg
+
+    def is_dead(self):
+        return self.__health <= 0
+
+    def get_name(self):
+        return self.__name
+
+    def get_home(self):
+        return self.__home
+
+    def get_health(self):
+        return self.__health
+
+    def get_damage(self):
+        return self.__damage
+
+    def set_name(self, name):
+        self.__name = name
+
+    def set_home(self, home):
+        self.__home = home
+
+    def set_health(self, health):
+        self.__health = health
+
+    def set_damage(self, damage):
+        self.__damage = damage
+
+class TestAlien(unittest.TestCase):
+    def setUp(self):
+        self.alien1 = Alien()
+        self.alien1.set_name('Alien 1')
+        self.alien1.set_home('Agpton')
+        self.alien1.set_health(100)
+        self.alien1.set_damage(20)
+
+        self.alien2 = Alien()
+        self.alien2.set_name('Alien 2')
+        self.alien2.set_home('Vanguard')
+        self.alien2.set_health(100)
+        self.alien2.set_damage(20)
+
+    def test_attack(self):
+        self.alien1.attack(self.alien2)
+        self.assertEqual(self.alien2.get_health(), 80)
+
+    def test_is_dead(self):
+        self.assertFalse(self.alien1.is_dead())
+        self.assertFalse(self.alien2.is_dead())
+        self.alien1.set_health(0)
+        self.assertTrue(self.alien1.is_dead())
+
+if __name__ == '__main__':
+    unittest.main()
